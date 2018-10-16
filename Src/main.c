@@ -48,6 +48,11 @@
 
 /* Private variables ---------------------------------------------------------*/
 
+uint8_t turn_on_led[5]="AAAAA";
+uint8_t turn_off_led[5]="BBBBB";
+
+uint8_t self_test[5]="BABABA";
+
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
@@ -98,7 +103,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   // uint8_t u8_test_message[5] = "AAAAA";
-  uint8_t test_string[5]="AAAAA";
+
 
   // uint8_t u8_len_test_message = sizeof(u8_test_message)/sizeof(u8_test_message[0]);
   /* USER CODE END 2 */
@@ -114,7 +119,18 @@ int main(void)
     HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
     HAL_Delay(100);
 
-    HAL_UART_Transmit_IT(&huart2, test_string, 5);
+    // test pattern to turn on led
+    HAL_UART_Transmit_IT(&huart2, turn_on_led, 5);
+    HAL_Delay(100);
+
+    // test pattern to turn off led
+    HAL_UART_Transmit_IT(&huart2, turn_off_led, 5);
+    HAL_Delay(100);
+
+    // error pattern do nothing for self test
+    HAL_UART_Transmit_IT(&huart2, self_test, 5);
+    HAL_Delay(100);
+
 
   }
   /* USER CODE END 3 */

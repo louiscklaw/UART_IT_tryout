@@ -38,7 +38,9 @@
 /* USER CODE BEGIN 0 */
 #include <string.h>
 
-uint8_t turn_on_led[5]="AAAAA";
+extern uint8_t turn_on_led[5];
+extern uint8_t turn_off_led[5];
+
 uint8_t recv_buffer[5];
 
 /* USER CODE END 0 */
@@ -211,7 +213,11 @@ void USART2_IRQHandler(void)
 
   // TODO: strcmp doesn't work here
   if (memcmp(recv_buffer, turn_on_led,5)==0){
-    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_8);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+  }
+
+  if (memcmp(recv_buffer, turn_off_led,5)==0){
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
   }
 
   /* USER CODE END USART2_IRQn 1 */
