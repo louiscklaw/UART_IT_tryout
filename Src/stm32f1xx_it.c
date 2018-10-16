@@ -36,6 +36,10 @@
 #include "stm32f1xx_it.h"
 
 /* USER CODE BEGIN 0 */
+#include <string.h>
+
+uint8_t turn_on_led[5]="AAAAA";
+uint8_t recv_buffer[5];
 
 /* USER CODE END 0 */
 
@@ -203,6 +207,13 @@ void USART2_IRQHandler(void)
   HAL_UART_IRQHandler(&huart2);
   /* USER CODE BEGIN USART2_IRQn 1 */
   HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_5);
+  HAL_UART_Receive_IT(&huart2, recv_buffer, 5);
+
+  // TODO: strcmp doesn't work here
+  if (memcmp(recv_buffer, turn_on_led,5)==0){
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_8);
+  }
+
   /* USER CODE END USART2_IRQn 1 */
 }
 
